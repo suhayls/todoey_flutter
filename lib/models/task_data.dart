@@ -8,18 +8,20 @@ class TaskData extends ChangeNotifier {
   StoreManager storeManager = StoreManager();
 
   void init() async {
+    await storeManager.open();
     _tasks = await storeManager.getTasks();
+    notifyListeners();
   }
 
   int get taskCount {
     return _tasks.length;
   }
 
-  void addTask(String newTaskTitle) async {
+  Future addTask(String newTaskTitle) async {
     Task task = Task(name: newTaskTitle);
+    task = await storeManager.insert(task);
     _tasks.add(task);
 
-    storeManager.insert(task);
     notifyListeners();
   }
 

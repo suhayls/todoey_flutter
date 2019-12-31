@@ -10,9 +10,9 @@ class StoreManager {
   String columnTitle = 'name';
   String columnIsDone = 'isDone';
 
-  StoreManager() {
-    open();
-  }
+//  StoreManager() {
+//    open();
+//  }
 
   Future open() async {
     var databasesPath = await getDatabasesPath();
@@ -26,7 +26,7 @@ class StoreManager {
   }
 
   Future<Task> insert(Task task) async {
-    task.tid = await db.insert('todoey', task.toMap());
+    task.tid = await db.insert(tableName, task.toMap());
     return task;
   }
 
